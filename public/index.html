@@ -1,90 +1,85 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Projet - Chat App</title>
-    <!-- Styles utilisés -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-</head>
-<body>
+    <head>
+        <title>Projet - Chat App</title>
+        <!-- Styles utilisés -->
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/index.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+    </head>
+    <body>
 
 
-    <!-- Authentification Login -->
+            <!-- Authentification Login -->
 
-    <div class="body"></div>
-    <div class="grad"></div>
+            <div class="body"></div>
+            <div class="grad"></div>
 
-    <div class="header">
-        <div><img src="img/chat-background.jpg"></div>
-    </div>
+            <div class="header">
+                <div><img src="img/chat-background.jpg"></div>
+            </div>
 
-    <br>
+            <br>
 
-    <div class="login">
-        <div id="login">
-            <form action="" id="loginform" name="formlog">
-                <h1 style="color: #fff">Bienvenue</h1>
-                <p style="color: #fff">Connectez-vous maintenant !</p>
-                <input type="text" name="login" id="username" placeholder="Nom d'utilisateur">
-                <input type="password" name="password" id="password" placeholder="Mot de passe">
-                <button id="btn" type="submit" value="Envoyer" style="font-weight:bold">Valider</button> 
-            </form>
-        </div>  
-    </div>
+            <div class="login">
+                <div id="login">
+                    <form action="" id="loginform" name="formlog">
+                        <h1 style="color: #fff">Bienvenue</h1>
+                        <p style="color: #fff">Connectez-vous maintenant !</p>
+                        <input type="text" name="login" id="username" placeholder="Nom d'utilisateur">
+                        <input type="password" name="password" id="password" placeholder="Mot de passe">
+                        <button id="btn" type="submit" value="Envoyer" style="font-weight:bold">Valider</button> 
+                    </form>
+                </div>  
+            </div>
 
-    <!-- Squelette chat -->
+            <!-- Squelette chat -->
 
-    <h2 class="titre">Chat Room</h2>
+            <h2 class="titre">Chat Room</h2>
 
-    <div class="container">
-        <!-- div des utilisateurs connectées -->
-        <div class="chat-window" id="users"> 
-
-            <h6 id="title-users">USERS CONNECTED</h6>
-        </div>
-
-        <!-- div des messages -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="chat-window">
-                    <div id="messages">
-                        <div class="message" id="msgtpl" style="display:none">
-                            <div class="info">
-                                <!--<img id="ava" src="{{{user.avatar}}}">-->
-                                <p id="us"><strong>{{user.username}}</strong></p>
-                                <p id="sms">{{message}}</p>
-                                <span class="date">{{h}}:{{m}}</span>
+            <div class="container">
+                <!-- div des utilisateurs connectées -->
+                <div class="chat-window" id="users"> 
+                    <h6 id="title-users">USERS CONNECTED</h6>
+                </div>
+                <!-- div des messages -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="chat-window">
+                            <div id="messages">
+                                <div class="message" id="msgtpl" style="display:none">
+                                    <div class="info">
+                                    
+                                        <p id="us"><strong>{{user.username}}</strong></p>
+                                        <p id="sms">{{message}}</p>
+                                        <span class="date">{{h}}:{{m}}</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!-- div du messagebox -->
+                    <div class="col-md-12">
+                        <div class="input-group enter-chat-message">
+                            <form action="" id="form">
+                                <textarea type="text" id="message" class="chat-windowbox" size="75"></textarea>
+                                <input style="float: left;
+                                margin-top: 80px;
+                                margin-left: 20px;" type="submit" id="send" value="Envoyer mon message !" class="submit">
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <!-- div du messagebox -->
-            <div class="col-md-12">
-                <div class="input-group enter-chat-message">
-                    <form action="" id="form">
-                        <textarea type="text" id="message" class="chat-windowbox" size="75"></textarea>
-                        <input style="float: left;
-                        margin-top: 80px;
-                        margin-left: 20px;" type="submit" id="send" value="Envoyer mon message !" class="submit">
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>      
+            </div>      
 
-    <!-- les scripts importés -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/nicescroll/3.5.4/jquery.nicescroll.js'></script>
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-    <script src="js/mustache.js"></script>
-    <script src="http://localhost:8080/socket.io/socket.io.js"></script>
-    <script src="js/login.js"></script>
-    <script src="js/client.js"></script>
+            <!-- les scripts importés -->
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+            <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+           
+            <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+            <script src="js/mustache.js"></script>
+            <script src="http://localhost:8080/socket.io/socket.io.js"></script>
+            <script src="js/client.js"></script>
     
-
-
-</body>
+    </body>
 </html>

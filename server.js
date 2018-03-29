@@ -8,32 +8,33 @@ io = require('socket.io').listen(httpServer),
 fs = require('fs');
 var mysql = require('mysql')
 
-// Chargement de la page index.html
 
+//Exploitation des fichiers statiques utilisés
 app.use(express.static('public'));
 
+// Chargement de la page index.html
 app.get('/', function (req, res) {
 	res.sendfile(__dirname + '/index.html');
 });
 
-var connection = mysql.createConnection({
+var connection = mysql.createConnection({   //connexion à la base de donnée
 	host : 'localhost',
 	user: 'root',
 	password: '',
 	database: 'demo'
 })
 
-connection.connect(function(err){
+connection.connect(function(err){			//En cas d'erreur dans la connexion à la base de données
 	if(err){
 		console.log("Connexion echouée")
 	}
 })
 
-
-var io = require('socket.io').listen(httpServer);
+//Tableau des utilisateurs et des messages
 var users = {}
 var messages = []
 var limite = 5
+
 /* io.sockets connection est une variable relative à chaque utilisateur */
 /* Côté Serveur */
 io.sockets.on('connection', function(socket){ 
@@ -43,10 +44,10 @@ io.sockets.on('connection', function(socket){
 	var me = false;
 
 	for(var k in users){
-		console.log(users[k])
+		console.log(users[k])            //parcouris tous les utilisateurs deja connecté et les affichés
 		socket.emit('newusr',users[k])
 	}
-	for(var k in messages){
+	for(var k in messages){			 	 //parcouris tous les messages deja envoyé et les affichés
 		socket.emit('newmsg',messages[k])
 	}
 
@@ -73,7 +74,7 @@ io.sockets.on('connection', function(socket){
 			 socket.on('login',function(user){
 
 			 	console.log(user)
-
+				//Chercher l'utilisateur sur la base de données
 			 	connection.query('SELECT * FROM userss WHERE user = ?', [user.username],function(err,rows,fields){
 			 		if(err){
 			 			socket.emit('error',err)
@@ -83,10 +84,12 @@ io.sockets.on('connection', function(socket){
 			 		me = {}
 			 		me.username = user.username
 			 		me.password = user.password
-			 		me.id = user.password
+					me.id = user.password
+					//si l'utilisateur n'a pas entrer le nom d'utilisateur ou le mot de passe 
 			 		if(me.id === ''){
 						socket.emit('alerte2',user)
 					}else{
+						//si un nouveau utilisateur non inscrit sur la base de donnée qui est enregistré
 						if(rows.length === 0){
 
 							socket.emit('logged')
@@ -97,17 +100,18 @@ io.sockets.on('connection', function(socket){
    
 						}
 						else{
-							
+							//si le nom d'utilisateur est dejà utilisé, on compare le mot de passe
 							connection.query('SELECT * FROM userss WHERE user = ?', [user.username],function(err,rows,fields){
 								
 								if(err){
 									socket.emit('error',err.code)
 									return false
-								}	
+								}
+								//si l'utilisateur a entré les bons informations
 								if(rows[0].pass === me.password){
 									var res = rows[0].user; 
-									console.log(res)
 									var test = 0;
+									//Cherche s'il est deja connecté
 									for(var k in users){
 										console.log(k)
 										if(res.toUpperCase() === users[k].username.toUpperCase()){
@@ -122,7 +126,8 @@ io.sockets.on('connection', function(socket){
 										users[me.id]= user
 										io.sockets.emit('newusr',user)
 									}
-								}	
+								}
+								//si les informations ne sont pas bonnes	
 								else{
 									socket.emit('mdp',user)
 								}

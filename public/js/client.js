@@ -4,7 +4,7 @@
 
 	var socket = io.connect('http://localhost:8080'); //Etablie la connection avec le serveur
 	var msgtpl = $('#msgtpl').html() 
-	var lastusr = false //Separer entre les messages des utilisateurs
+	
 	$('#msgtpl').remove()
 
 	/**
@@ -29,7 +29,6 @@
 	 		$('.login').fadeOut()
 	 		$('#login').fadeOut()
 	 		$('#message').focus('')
-	
 
 	 })
 
@@ -37,7 +36,7 @@
 	 * Gestion des connectés
 	 */
 	 socket.on('newusr', function(user){
-		//$('#users').append('<img src="' + user.avatar + '" id="' + user.id + '">')
+		
 				$('#messages').append('<div class="sep"></div>')
 				$('#messages').append('<h6 style="color : green; margin-left:15px">'+ '<strong>' +user.username +'</strong>' + ' is connected</h6>')
 				$('#users').append('<img src="img/user.png" id="' + user.username + '">')
@@ -83,6 +82,6 @@
 	 socket.on('error',function(err){
 	 	alert(err)
 	 })
-
-
-	})(jQuery);
+	 
+	 
+})(jQuery);
